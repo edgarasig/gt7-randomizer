@@ -1,0 +1,32 @@
+= GT7 Randomizer
+
+A simple, fast, and highly customizable randomizer for Gran Turismo 7 (up to Patch 1.67). 
+
+This app generates random car and track combinations with just the click of a button, helping you find new and exciting custom races. It runs entirely locally in your browser, requiring no installation or internet connection.
+
+== Features
+* **Massive Database:** Includes 569 cars and 118 distinct track layouts.
+* **Granular Filtering:** Filter cars by Category (Gr.3, N300, etc.), Drivetrain (FR, MR, 4WD), Aspiration (NA, TC, EV), and Region. Filter tracks by surface type (Circuit, City, Dirt) and Region.
+* **Multi-Event Generator:** Instantly generate up to 100 events at once to create a custom championship. You can even lock a single random car to use across all generated tracks.
+* **Authentic Branding:** Displays high-quality manufacturer logos for cars and official track outline graphics for circuits.
+* **Custom Race Lengths:** Choose between random laps, a fixed lap count, or a set time limit (in minutes).
+* **Environment Generation:** Automatically generates a random Time of Day and Weather scenario for every event.
+
+== How to Use
+1. Open the `index.html` file in any modern web browser (Chrome, Firefox, Edge, Safari).
+2. Configure your race length and how many events you want to generate.
+3. Open the **Filters** menu to restrict the randomizer to specific types of cars or tracks (e.g., Gr.3 cars on European circuits). Leave checkboxes blank to include everything.
+4. Click the **"Generate Events"** button.
+
+== Updating Data
+If a new GT7 patch drops and you want to add new cars or tracks:
+1. Open `cars.js` or `tracks.js` in a text editor.
+2. Add the new items to the respective array using the existing JSON object structure.
+3. For new cars, include properties like `category`, `drivetrain`, `aspiration`, and `region`.
+4. If a new brand or track is added, you can download a `.png` logo and place it in the `logos/` or `track_logos/` directory, making sure the filename matches the `logo` string in your data file.
+
+== Acknowledgements
+The core car and track database was sourced from the community-driven GT7 info repository.
+
+== License
+This project is free software. All copyrights belong to the original author. You are free to update, modify, and share this software, but **you may not sell it or use it for commercial purposes**. See the `LICENSE` file for full details.

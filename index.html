@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GT7 Randomizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GT7 Randomizer</h1>
+            <p>Patch 1.67 Ready</p>
+        </header>
+
+        <section class="controls">
+            <div class="control-group">
+                <label for="length-type">Race Length:</label>
+                <select id="length-type">
+                    <option value="random">Random Laps</option>
+                    <option value="laps">Custom Laps</option>
+                    <option value="time">Custom Time (Mins)</option>
+                </select>
+                <input type="number" id="length-value" min="1" style="display: none;" placeholder="Qty">
+            </div>
+            
+            <div class="control-group">
+                <label for="event-count">Number of Events:</label>
+                <input type="number" id="event-count" min="1" max="100" value="1">
+            </div>
+            
+            <div class="control-group checkbox-group">
+                <input type="checkbox" id="same-car">
+                <label for="same-car">Use same car for all events</label>
+            </div>
+
+            <details class="filters-container">
+                <summary>Filters (Leave empty for any)</summary>
+                <div class="filters-grid">
+                    <div class="filter-col">
+                        <h4>Car Category</h4>
+                        <label><input type="checkbox" class="filter-cat" value="Gr.1"> Gr.1</label>
+                        <label><input type="checkbox" class="filter-cat" value="Gr.2"> Gr.2</label>
+                        <label><input type="checkbox" class="filter-cat" value="Gr.3"> Gr.3</label>
+                        <label><input type="checkbox" class="filter-cat" value="Gr.4"> Gr.4</label>
+                        <label><input type="checkbox" class="filter-cat" value="Gr.B"> Gr.B</label>
+                        <label><input type="checkbox" class="filter-cat" value="N100"> N100-N400</label>
+                        <label><input type="checkbox" class="filter-cat" value="N500"> N500-N1000</label>
+                        <label><input type="checkbox" class="filter-cat" value="Road Car"> Road Car</label>
+                        <label><input type="checkbox" class="filter-cat" value="VGT"> VGT</label>
+                    </div>
+                    <div class="filter-col">
+                        <h4>Drivetrain</h4>
+                        <label><input type="checkbox" class="filter-dt" value="FR"> FR</label>
+                        <label><input type="checkbox" class="filter-dt" value="FF"> FF</label>
+                        <label><input type="checkbox" class="filter-dt" value="MR"> MR</label>
+                        <label><input type="checkbox" class="filter-dt" value="4WD"> 4WD</label>
+                        <label><input type="checkbox" class="filter-dt" value="RR"> RR</label>
+                        <h4 style="margin-top: 1rem;">Aspiration</h4>
+                        <label><input type="checkbox" class="filter-asp" value="NA"> NA</label>
+                        <label><input type="checkbox" class="filter-asp" value="TC"> TC</label>
+                        <label><input type="checkbox" class="filter-asp" value="SC"> SC</label>
+                        <label><input type="checkbox" class="filter-asp" value="EV"> EV</label>
+                    </div>
+                    <div class="filter-col">
+                        <h4>Car Region</h4>
+                        <label><input type="checkbox" class="filter-reg" value="Americas"> Americas</label>
+                        <label><input type="checkbox" class="filter-reg" value="Europe"> Europe</label>
+                        <label><input type="checkbox" class="filter-reg" value="Asia-Pacific"> Asia-Pacific</label>
+                        <h4 style="margin-top: 1rem;">Track Region</h4>
+                        <label><input type="checkbox" class="filter-treg" value="Americas"> Americas</label>
+                        <label><input type="checkbox" class="filter-treg" value="Europe"> Europe</label>
+                        <label><input type="checkbox" class="filter-treg" value="Asia-Pacific"> Asia-Pacific</label>
+                    </div>
+                    <div class="filter-col">
+                        <h4>Track Type</h4>
+                        <label><input type="checkbox" class="filter-tcat" value="circuit"> Real Circuits</label>
+                        <label><input type="checkbox" class="filter-tcat" value="original"> Original Tracks</label>
+                        <label><input type="checkbox" class="filter-tcat" value="city"> City/Street</label>
+                        <label><input type="checkbox" class="filter-tcat" value="snow_dirt"> Dirt/Snow</label>
+                    </div>
+                </div>
+            </details>
+            
+            <button id="generate-btn">Generate Events</button>
+        </section>
+
+        <main id="events-container">
+            <!-- Generated events will appear here -->
+        </main>
+    </div>
+
+    <script src="cars.js"></script>
+    <script src="tracks.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
