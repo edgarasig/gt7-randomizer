@@ -12,6 +12,18 @@ const weatherTypes = [
 // Helper to get random item from array
 const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
+// Helper to extract year from car name
+const getCarYear = (name) => {
+    const matchYY = name.match(/'(\d{2})$/);
+    if (matchYY) {
+        const y = parseInt(matchYY[1], 10);
+        return y < 50 ? 2000 + y : 1900 + y;
+    }
+    const matchYYYY = name.match(/\b(19|20)\d{2}\b/);
+    if (matchYYYY) return parseInt(matchYYYY[0], 10);
+    return null;
+};
+
 const generateLaps = () => {
     const rand = Math.random();
     if (rand < 0.7) {
@@ -48,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filterData = () => {
         const catFilters = getCheckedValues('.filter-cat');
+        const yearFilters = getCheckedValues('.filter-year');
         const dtFilters = getCheckedValues('.filter-dt');
         const aspFilters = getCheckedValues('.filter-asp');
         const regFilters = getCheckedValues('.filter-reg');
@@ -66,7 +79,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     return car.category === filter;
                 });
             }
-            return matchesCat &&
+
+            let matchesYear = true;
+            // Only apply year filtering if any year filter is selected
+            if (yearFilters.length > 0) {
+                const year = getCarYear(car.name);
+                if (year === null) {
+                    matchesYear = yearFilters.includes('unknown');
+                } else {
+                    matchesYear = yearFilters.some(filter => {
+                        if (filter === 'pre80') return year < 1980;
+                        if (filter === '80s') return year >= 1980 && year < 1990;
+                        if (filter === '90s') return year >= 1990 && year < 2000;
+                        if (filter === '00s') return year >= 2000 && year < 2010;
+                        if (filter === '10s') return year >= 2010 && year < 2020;
+                        if (filter === '20s') return year >= 2020;
+                        return false;
+                    });
+                }
+            }
+
+            return matchesCat && matchesYear &&
                    (dtFilters.length === 0 || dtFilters.includes(car.drivetrain)) &&
                    (aspFilters.length === 0 || aspFilters.includes(car.aspiration)) &&
                    (regFilters.length === 0 || regFilters.includes(car.region));
