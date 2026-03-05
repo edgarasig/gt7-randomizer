@@ -57,9 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let availableCars = gt7Cars.filter(car => {
             let matchesCat = true;
             if (catFilters.length > 0) {
-                if (catFilters.includes('N100') && ['N100', 'N200', 'N300', 'N400'].includes(car.category)) matchesCat = true;
-                else if (catFilters.includes('N500') && ['N500', 'N600', 'N700', 'N800', 'N900', 'N1000'].includes(car.category)) matchesCat = true;
-                else matchesCat = catFilters.includes(car.category);
+                const isGrB = car.name.includes('Gr.B') || car.category === 'Gr.B';
+                const isRoadCar = car.category === 'Road Car' && !car.name.includes('Gr.B');
+                
+                matchesCat = catFilters.some(filter => {
+                    if (filter === 'Gr.B') return isGrB;
+                    if (filter === 'Road Car') return isRoadCar;
+                    return car.category === filter;
+                });
             }
             return matchesCat &&
                    (dtFilters.length === 0 || dtFilters.includes(car.drivetrain)) &&
