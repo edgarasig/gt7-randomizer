@@ -159,6 +159,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const lengthType = elements.lengthTypeSelect.value;
         const customLengthValue = Math.max(1, parseInt(elements.lengthValueInput.value, 10) || 1);
 
+        // Group tracks by base_name to ensure equal probability for each location
+        const trackGroups = {};
+        for (const track of availableTracks) {
+            if (!trackGroups[track.base_name]) {
+                trackGroups[track.base_name] = [];
+            }
+            trackGroups[track.base_name].push(track);
+        }
+        
+        let availableBaseNames = Object.keys(trackGroups);
+        
+        const getUniqueRandomTrack = () => {
+            if (availableBaseNames.length === 0) {
+                // Reset pool if we somehow run out of unique locations (e.g. strict filters)
+                availableBaseNames = Object.keys(trackGroups);
+                if (availableBaseNames.length === 0) return getRandomItem(availableTracks);
+            }
+            const randIndex = Math.floor(Math.random() * availableBaseNames.length);
+            const baseName = availableBaseNames[randIndex];
+            
+            // Remove the baseName from pool to prevent same track location repeating
+            availableBaseNames.splice(randIndex, 1);
+            
+            const layouts = trackGroups[baseName];
+            return getRandomItem(layouts);
+        };
+
+        let availableCarPool = [...availableCars];
+        
+        const getUniqueRandomCar = () => {
+            if (availableCarPool.length === 0) {
+                availableCarPool = [...availableCars];
+                if (availableCarPool.length === 0) return getRandomItem(availableCars);
+            }
+            const randIndex = Math.floor(Math.random() * availableCarPool.length);
+            const car = availableCarPool[randIndex];
+            availableCarPool.splice(randIndex, 1);
+            return car;
+        };
+
         const fragment = document.createDocumentFragment();
 
         for (let i = 0; i < numEvents; i++) {
@@ -167,8 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 value: lengthType === 'random' ? generateLaps() : (lengthType === 'time' ? `${customLengthValue} Min` : customLengthValue)
             };
 
-            const car = globalCar || getRandomItem(availableCars);
-            const track = getRandomItem(availableTracks);
+            const car = globalCar || getUniqueRandomCar();
+            const track = getUniqueRandomTrack();
 
             fragment.appendChild(createEventCard(car, track, lengthData, i, numEvents));
         }
